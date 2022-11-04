@@ -1,17 +1,14 @@
 import { NativeBaseProvider, Text, extendTheme } from 'native-base'
 import React from 'react'
 import { Button } from 'react-native-paper';
-
-import auth from "./config/Firebase";
+import "./config/Firebase";
 import Apps from "./components/App";
 import { Provider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './redux/reducers';
-import thunk from 'redux-thunk';
+import { PersistGate } from "redux-persist/es/integration/react";
+import store, { persistor } from "./store";
 import { StatusBar } from 'expo-status-bar';
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
 export default function App() {
   const theme = extendTheme({
     colors: {
@@ -39,13 +36,15 @@ export default function App() {
     },
   });
   return (
-    <Provider store={store}>
-      <PaperProvider>
-        <NativeBaseProvider theme={theme}>
-          <StatusBar animated={true}  style="light"  backgroundColor="#61dafb" />
-          <Apps/>
-        </NativeBaseProvider>
-      </PaperProvider>
-    </Provider>
+    <PaperProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+            <NativeBaseProvider theme={theme}>
+              <StatusBar animated={true}  style="light"  backgroundColor="#61dafb" />
+              <Apps/>
+            </NativeBaseProvider>
+        </PersistGate>
+      </Provider>
+    </PaperProvider>
   )
 }

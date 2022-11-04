@@ -67,7 +67,7 @@ function LoginPage(props) {
             });
     }
     function FLogin(){
-        const provider =  firebase.auth.FacebookAuthProvider();
+        const provider =new  firebase.auth.FacebookAuthProvider();
         firebase.auth()
           .signInWithPopup(provider)
           .then((result) => {

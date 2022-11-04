@@ -1,6 +1,7 @@
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import "firebase/compat/auth";
-require('firebase/compat/firestore')
+require('firebase/compat/firestore');
+
 const firebaseConfig = {
     apiKey: "AIzaSyAC1XLQGwPEHLEVDaEcCj4ZjqYMa6SPGog",
     authDomain: "instashare-7eb98.firebaseapp.com",
