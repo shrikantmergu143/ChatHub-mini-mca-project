@@ -37,14 +37,14 @@ export default function App() {
   });
   return (
     <PaperProvider>
+      <NativeBaseProvider theme={theme}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-            <NativeBaseProvider theme={theme}>
               <StatusBar animated={true}  style="light"  backgroundColor="#61dafb" />
               <Apps/>
-            </NativeBaseProvider>
         </PersistGate>
       </Provider>
+      </NativeBaseProvider>
     </PaperProvider>
   )
 }

@@ -35,10 +35,11 @@ function AddUserPage(props) {
             <ScrollView scrollEnabled={true}>
                 <VStack bg={"white"}>
                     <FlatList
-                            data={props?.friends}
-                            renderItem={({item})=>(
-                                <FriendsList navigation={props.navigation} users={item} />
-                            )}
+                        keyExtractor={(item, index) => index.toString()}
+                        data={props?.friends}
+                        renderItem={({item})=>(
+                            <FriendsList navigation={props.navigation} users={item} />
+                        )}
                     />
                 </VStack>
            </ScrollView>

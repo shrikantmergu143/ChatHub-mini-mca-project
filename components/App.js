@@ -1,6 +1,6 @@
 import React, {   useState, useEffect  } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View,Text, Image,TextInput, FlatList, Button,Dimensions,TouchableOpacity,ScrollView ,SafeAreaView} from 'react-native'
+import { StyleSheet, View,Text, Image,TextInput, FlatList, Button,Dimensions,TouchableOpacity,ScrollView } from 'react-native'
 import { bindActionCreators } from 'redux';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';

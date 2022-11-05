@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import firebase from 'firebase/compat'
 import { Entypo, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import { StyleSheet, View,Text, Image,TextInput, FlatList, Button,Dimensions,TouchableOpacity,ScrollView ,SafeAreaView, LogBox} from 'react-native'
+import { StyleSheet, View,Text, Image,TextInput, FlatList, Button,Dimensions,TouchableOpacity,ScrollView, LogBox} from 'react-native'
 import { bindActionCreators } from 'redux'
 import { fetchUser, fetchAllUser, fetchFriends, fetchFriendsState, fetchrequestFriends } from './../redux/action/index';
 import HomeScreen from "./main/HomePage/HomePage";

@@ -1,7 +1,7 @@
 import { Text, View, Box, Center, VStack, FormControl, Input, Button, Divider, HStack, Image, Avatar, Spinner } from 'native-base'
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { fetchEmailChange, fetchPassword, fetchUsername, fetchFullName, fetchFriends } from './../../../redux/action';
-import {KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity, ScrollView,SafeAreaView, FlatList, Alert} from "react-native"
+import {KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList, Alert} from "react-native"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { StatusBar } from 'expo-status-bar';
@@ -230,8 +230,8 @@ function AddUserPage(props) {
     return (
         <>
             <View style={{ height:"100%", paddingBottom:70}}>
-            <SafeAreaView >
                     <FlatList
+                        keyExtractor={(item, index) => index.toString()}
                         style={{height:"100%"}}
                         data={chatList}
                         renderItem={({item})=>(
@@ -307,7 +307,6 @@ function AddUserPage(props) {
                             </>
                         )}
                     />
-            </SafeAreaView>
 
             </View>
             <View style={{position: 'absolute', left: 0, right: 0, bottom: 3, paddingTop:0,display:"flex",alignItems:'center',height:50}}>
