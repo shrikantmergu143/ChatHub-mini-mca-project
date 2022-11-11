@@ -91,6 +91,7 @@ function AddUserPage(props) {
                 //     </HStack>
                 // </Button>
                 <Buttons
+                    onPress={()=>AddFriend(props.uid)}
                     icon={
                         <Feather name={"user-plus"} style={{ fontSize:14,marginRight:10, color:'white'}} />
                     }
@@ -99,6 +100,7 @@ function AddUserPage(props) {
                     iconPosition={'left'}
                     titleStyle={{fontSize:14}}
                     buttonStyle={{paddingLeft:14, paddingRight:14}}
+                    loadingStyle={{width:80, height:15}}
                 />
             }
         </HStack>
