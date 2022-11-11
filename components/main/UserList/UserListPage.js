@@ -8,6 +8,8 @@ import { StatusBar } from 'expo-status-bar';
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
+import { Button as Buttons } from 'react-native-elements';
+
 import "firebase/compat/firestore"
 import { db } from '../../../config/Firebase';
 const screenWidth = Dimensions.get("window").width
@@ -82,12 +84,22 @@ function AddUserPage(props) {
                </HStack>
                 :
                 
-                <Button colorScheme={'primary'} isLoading={load} isLoadingText="wait" spinnerPlacement={"start"} onPress={()=>AddFriend(props.uid)}> 
-                    <HStack alignItems={"center"}>
-                        <Feather name={"user-plus"} style={{marginRight:4, fontSize:18, color:'white'}} />
-                        <Text color={"white"}> Add Freind</Text>
-                    </HStack>
-                </Button>
+                // <Button colorScheme={'primary'} isLoading={load} isLoadingText="wait" spinnerPlacement={"start"} onPress={()=>AddFriend(props.uid)}> 
+                //     <HStack alignItems={"center"}>
+                //         <Feather name={"user-plus"} style={{marginRight:4, fontSize:18, color:'white'}} />
+                //         <Text color={"white"}> Add Freind</Text>
+                //     </HStack>
+                // </Button>
+                <Buttons
+                    icon={
+                        <Feather name={"user-plus"} style={{ fontSize:14,marginRight:10, color:'white'}} />
+                    }
+                    loading={load}
+                    title={"Add Freind"}
+                    iconPosition={'left'}
+                    titleStyle={{fontSize:14}}
+                    buttonStyle={{paddingLeft:14, paddingRight:14}}
+                />
             }
         </HStack>
     )

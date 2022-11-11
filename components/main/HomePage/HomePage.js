@@ -31,19 +31,13 @@ function AddUserPage(props) {
     }
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.form}>
-            <ScrollView scrollEnabled={true}>
-                <VStack bg={"white"}>
-                    <FlatList
-                        keyExtractor={(item, index) => index.toString()}
-                        data={props?.friends}
-                        renderItem={({item})=>(
-                            <FriendsList navigation={props.navigation} users={item} />
-                        )}
-                    />
-                </VStack>
-           </ScrollView>
-        </KeyboardAvoidingView>
+            <FlatList
+                keyExtractor={(item, index) => index.toString()}
+                data={props?.friends}
+                renderItem={({item})=>(
+                    <FriendsList navigation={props.navigation} users={item} />
+                )}
+            />
     )
 }
 const styles = StyleSheet.create({

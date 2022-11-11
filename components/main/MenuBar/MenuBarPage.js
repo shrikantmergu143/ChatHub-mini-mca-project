@@ -1,4 +1,4 @@
-import { Text, View, Box, Center, VStack, FormControl, Input, Button, Divider, HStack } from 'native-base'
+import { Text, View, Box, Center, VStack, FormControl, Input, Button, Divider, HStack, Menu } from 'native-base'
 import React, { useLayoutEffect, useState } from 'react';
 import { fetchEmailChange, fetchPassword, fetchUsername, fetchFullName } from './../../../redux/action';
 import {KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity} from "react-native"
@@ -15,34 +15,33 @@ const screenHeight = Dimensions.get("window").height
 function AddUserPage(props) {
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.form}>
-          <VStack bg={"white"}>
-            <TouchableOpacity onPress={()=>props.navigation.navigate("AddUser")} style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
-              <HStack paddingX={3} paddingY={4} alignItems={"center"}>
-                <FontAwesome name={"user-plus"} style={{fontSize:25,color:"#0090f7"}}  />
-                <Text ml={5} fontSize={20} fontWeight={"normal"}>Add Friend</Text>
-              </HStack>
-            </TouchableOpacity>
-            <TouchableOpacity style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
-              <HStack paddingX={3} paddingY={4} alignItems={"center"}>
-                <FontAwesome name={"user"} style={{fontSize:25,color:"#0090f7"}}  />
-                <Text ml={5} fontSize={20} fontWeight={"normal"}>Personal Account</Text>
-              </HStack>
-            </TouchableOpacity>
-            <TouchableOpacity style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
-              <HStack paddingX={3} paddingY={4} alignItems={"center"}>
-                <Ionicons name={"settings-outline"} style={{fontSize:25,color:"#0090f7"}}  />
-                <Text ml={5} fontSize={20} fontWeight={"normal"}>Setting Account</Text>
-              </HStack>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>firebase.auth().signOut()} style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
-              <HStack paddingX={3} paddingY={4} alignItems={"center"}>
-                <Ionicons name={"log-out-outline"} style={{fontSize:25,color:"#0090f7"}}  />
-                <Text ml={5} fontSize={20} fontWeight={"normal"}>Log Out</Text>
-              </HStack>
-            </TouchableOpacity>
-          </VStack>
-        </KeyboardAvoidingView>
+      <Menu  w="180"  style={{
+              position:"relative",
+              top:40,
+              right:2,
+              backgroundColor:"white"
+            }} trigger={triggerProps => {
+                return <TouchableOpacity  style={{marginLeft:15}} accessibilityLabel="More options menu" {...triggerProps}>
+                         <Ionicons name={"ellipsis-vertical"} style={{fontSize:20}} />
+                      </TouchableOpacity>;
+              }}>
+            <Menu.Item onPress={()=>props.navigation.navigate("AddUser")} style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
+                <FontAwesome name={"user-plus"} style={{fontSize:16,color:"grey"}}  />
+                <Text ml={1} fontSize={14} fontWeight={"bold"}>Add Friend</Text>
+            </Menu.Item>
+            <Menu.Item style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
+                <FontAwesome name={"user"} style={{fontSize:16,color:"grey"}}  />
+                <Text ml={1} fontSize={14} fontWeight={"bold"}>Personal Account</Text>
+            </Menu.Item>
+            <Menu.Item style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
+                <Ionicons name={"settings-outline"} style={{fontSize:16,color:"grey"}}  />
+                <Text ml={1} fontSize={14} fontWeight={"bold"}>Setting Account</Text>
+            </Menu.Item>
+            <Menu.Item onPress={()=>firebase.auth().signOut()} style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
+                <Ionicons name={"log-out-outline"} style={{fontSize:16,color:"grey"}}  />
+                <Text ml={1} fontSize={14} fontWeight={"bold"}>Log Out</Text>
+            </Menu.Item>
+      </Menu>
     )
 }
 const styles = StyleSheet.create({

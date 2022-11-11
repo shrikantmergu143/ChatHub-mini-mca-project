@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Entypo, FontAwesome, AntDesign, FontAwesome5, Feather, MaterialCommunityIcons, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
+import { ListItem, Avatar as Avatars } from 'react-native-elements'
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import * as ImagePicker from 'expo-image-picker';
@@ -60,31 +61,18 @@ function AddUserPage(props) {
             headerLeft:()=>(
                 <HStack alignItems={"center"} marginLeft={0} space={1}>
                     <Button variant={"unstyled"} ml={-4} onPress={()=>select===""?props.navigation.goBack():setSelect("")}>
-                        <HStack alignItems={"center"} space={3}>
-                            <MaterialIcons name={"arrow-back"} style={{fontSize:20, fontWeight:"900"}} />
+                        <HStack alignItems={"center"} space={1}>
+                            <AntDesign name={"left"} style={{fontSize:20, fontWeight:"900"}} />
                             {
-                            select===""?
-                            <Avatar size={"40px"} source={{uri:users.photoURL}} />
-                            : 
-                            <Text style={{fontSize:20,marginLeft: 4, fontWeight:'bold', marginLeft:3}}>1</Text>
+                            select!==""?<Text style={{fontSize:16, fontWeight:'bold', marginLeft:3}}>1</Text>:
+                            <Avatars size={40} rounded source={{uri:users.photoURL}}  />
                             }
                         </HStack>
                     </Button>
-                    {select===""?
-                        (
-                            <HStack alignItems={"center"}  >
-                                <VStack>
-                                    <Text fontSize={20} fontWeight={"700"} fontFamily={"font"}>{users?.username}</Text>
-                                    <Text fontSize={14}>{users?.fullName?users?.fullName:users?.fullname}</Text>
-                                </VStack>
-                            </HStack>
-                        )
-                        :
-                        (
-                            <HStack>
-                            </HStack>
-                        )
-                    }
+                    {select===""&&<ListItem.Content>
+                        <ListItem.Title style={{ fontWeight: 'bold' }}>{users?.username}</ListItem.Title>
+                        <ListItem.Subtitle>{users?.fullName?users?.fullName:users?.fullname}</ListItem.Subtitle>
+                    </ListItem.Content>}
                 </HStack>
             ),
             title:""

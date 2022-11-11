@@ -21,8 +21,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -33,8 +33,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -45,8 +45,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -57,8 +57,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -69,8 +69,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -81,8 +81,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -93,8 +93,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -105,8 +105,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -117,8 +117,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -129,8 +129,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"300"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -141,8 +141,8 @@ function LoginPage(props) {
                 <TouchableOpacity>
                     <List.Item >
                         <Avatar source={{uri:props?.currentUser?.photoURL}} size={"57px"} />
-                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"25px"} height={"25px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={0} ml={10} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 12}}>
-                            <FontAwesome name={"plus"} style={{fontSize:12, color:"white", fontWeight:"300"}} />
+                        <Badge position={"absolute"} colorScheme="success" rounded={"full"} width={"20px"} height={"20px"} display={"flex"} alignItems={"center"} justifyContent={"center"} mb={1} ml={9} p={0} zIndex={1} variant="solid" alignSelf="flex-end" _text={{fontSize: 10}}>
+                            <FontAwesome name={"plus"} style={{fontSize:10, color:"white", fontWeight:"100"}} />
                         </Badge>
                         <VStack height={"100%"} ml={3}>
                             <Text color="coolGray.800" _dark={{color: "warmGray.50"}} fontSize={18} pb={1} bold>My Status</Text>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     },
     shadowProp: {
         shadowColor: "#000",
-        shadowOffset:{  width: 10,  height: 10,  },
+        shadowOffset:{  width: 10,  height: 8,  },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
         elevation: 9,

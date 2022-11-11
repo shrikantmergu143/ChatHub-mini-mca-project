@@ -1,4 +1,4 @@
-import { Text, View, Box, Center, VStack, FormControl, Input, Button, Divider, HStack, Avatar, FlatList, Spinner, ScrollView } from 'native-base'
+import { Text, View, Box, Center, VStack, Pressable, Input, Button, Spacer, HStack, Avatar, FlatList, Spinner, ScrollView } from 'native-base'
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { fetchEmailChange, fetchPassword, fetchUsername, fetchFullName, fetchFriends } from './../../../redux/action';
 import {KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity, Image} from "react-native"
@@ -11,6 +11,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import moment from 'moment';
 import { Video, AVPlaybackStatus } from 'expo-av';
+import { ListItem, Avatar as Avatars } from 'react-native-elements'
 
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
@@ -43,7 +44,7 @@ function AddUserPage(props) {
       
         if (timeDiff <= (24 * 60 * 60 * 1000)) {
           //Today
-          return moment(date).format('h:mm a');
+          return moment(date).format('h:mm A');
         } else if (timeDiff <= (48 * 60 * 60 * 1000)) {
           // Yesterday
           return "Yesterday"
@@ -55,49 +56,37 @@ function AddUserPage(props) {
         }
       }
     return (
-        <TouchableOpacity style={{borderColor:"whitesmoke", borderWidth:1}} onPress={()=>props?.navigation.navigate("Message",{...props?.users})}>
-            {message?.sendAt!==undefined?
-                <HStack width={"100%"} paddingX={3} paddingY={3} alignItems={"center"} justifyContent={"space-between"}>
-                    <HStack alignItems={"center"}>
-                        <Avatar size={"48px"} source={{uri:props?.users.photoURL}} />
-                        <VStack paddingLeft={4}>
-                            <Text fontSize={18} fontWeight={"bold"} fontFamily={"heading"} >{props?.users.username}</Text>
-                           { message.type==="text"?
-                                <Text>{message?.message}</Text>
-                                :
-                                message.type==="image"?<Image source={{uri:message.message}} style={{height:20, width:26, borderRadius:5, borderColor:"whitesmoke", borderWidth:1}} />
-                                :
-                                message.type==="video"&&
-                                <Video
-                                    style={styles.video}
-                                    source={{
-                                    uri: message.message,
-                                    }}
-                                    useNativeControls
-                                    resizeMode="contain"
-                                />
-                           }
-                        </VStack>
-                    </HStack>
-                    <HStack>
-                        <Text style={{fontWeight:"500", fontSize:10}}>{toDate(message?.sendAt)}</Text>
-                    </HStack>
-                </HStack>
-                :
-                <HStack width={"100%"} paddingX={3} paddingY={3} alignItems={"center"} justifyContent={"space-between"}>
-                    <HStack alignItems={"center"}>
-                        <Avatar size={"48px"} source={{uri:props?.users.photoURL}} />
-                        <VStack paddingLeft={4}>
-                            <Text fontSize={18} fontWeight={"bold"} fontFamily={"heading"} >{props?.users.username}</Text>
-                            <Text>{props?.users.fullName?props?.users.fullName:props?.users.fullname}</Text>
-                        </VStack>
-                    </HStack>
-                    <HStack>
-                        <Text style={{fontWeight:"500", fontSize:10}}></Text>
-                    </HStack>
-                </HStack>
-            }
-        </TouchableOpacity>
+        <ListItem 
+            key={props?.users?.uid}
+            topDivider
+            onPress={()=>props?.navigation.navigate("Message",{...props?.users})} 
+            
+        >
+            <Avatars size={40} rounded source={{uri:props?.users.photoURL}} />
+            <ListItem.Content>
+                <ListItem.Title style={{ fontWeight: 'bold' }}>{props?.users.username}</ListItem.Title>
+                <ListItem.Subtitle>
+                {message?.sendAt!==undefined? message.type==="text"?
+                        <Text >{message?.message}</Text>
+                        :
+                        message.type==="image"?<Image source={{uri:message.message}} style={{height:20, width:26, borderRadius:5, borderColor:"whitesmoke", borderWidth:1}} />
+                        :
+                        message.type==="video"&&
+                        <Video
+                            style={styles.video}
+                            source={{
+                            uri: message.message,
+                            }}
+                            useNativeControls
+                            resizeMode="contain"
+                        />
+                        :
+                        props?.users.fullname
+                    }
+                </ListItem.Subtitle>
+            </ListItem.Content>
+            {message?.sendAt&&<Text fontSize="xs" color="coolGray.800" _dark={{ color: 'warmGray.50'}} alignSelf="flex-start">{toDate(message?.sendAt)}</Text>}
+        </ListItem>
     )
 }
 const styles = StyleSheet.create({
@@ -112,6 +101,10 @@ const styles = StyleSheet.create({
         width: screenWidth*0.1,
         height: 20,
       },
+    username:{
+        fontSize:16,
+        lineHeight:28
+    }
 });
 
 const mapStateToProps = (store) => ({

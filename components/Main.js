@@ -3,12 +3,13 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import firebase from 'firebase/compat'
 import { Entypo, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import { StyleSheet, View,Text, Image,TextInput, FlatList, Button,Dimensions,TouchableOpacity,ScrollView, LogBox} from 'react-native'
+import { StyleSheet, View,Text, Image,TextInput, Button,Dimensions,TouchableOpacity,ScrollView, Pressable, LogBox} from 'react-native'
 import { bindActionCreators } from 'redux'
 import { fetchUser, fetchAllUser, fetchFriends, fetchFriendsState, fetchrequestFriends } from './../redux/action/index';
 import HomeScreen from "./main/HomePage/HomePage";
-import { HStack, VStack, Box, Popover } from 'native-base';
+import { HStack, VStack, Box, Popover, Menu } from 'native-base';
 import StatusPage from './main/StatusPage/StatusPage';
+import MenuBarPage from "./main/MenuBar/MenuBarPage";
 
 const Tab = createMaterialTopTabNavigator();
 LogBox.ignoreLogs(['Setting a timer']);
@@ -38,9 +39,10 @@ function Main(props){
             <TouchableOpacity onPress={()=>props.navigation.navigate("AddUser")} >
                 <FontAwesome name={"user-plus"} style={{fontSize:20}} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>props.navigation.navigate("Menu")} style={{marginLeft:15}} >
+            {/* <TouchableOpacity onPress={()=>props.navigation.navigate("Menu")} style={{marginLeft:15}} >
                 <Ionicons name={"ellipsis-vertical"} style={{fontSize:20}} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+           <MenuBarPage {...props}/>
         </HStack>
       )
     })
@@ -55,8 +57,8 @@ function Main(props){
       <Tab.Navigator initialRouteName="Home"
         screenOptions={{ 
             tabBarColor:"white",
-            tabBarLabelStyle: { fontSize: 16 },
-            tabBarActiveTintColor: '#007aff',
+            tabBarLabelStyle: { fontSize: 14, fontWieght:"400" },
+            tabBarActiveTintColor: '#007eee',
             tabBarStyle: { backgroundColor: 'white',borderBottomColor:'grey', borderTopColor:'white',borderTopColor:0 },
             tabBarInactiveTintColor:'grey'
         }}
