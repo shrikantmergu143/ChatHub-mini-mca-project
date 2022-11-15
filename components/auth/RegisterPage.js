@@ -9,6 +9,7 @@ import { FontAwesome, Octicons } from "@expo/vector-icons";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
 import "firebase/compat/firestore"
+import { ScrollView } from 'react-native-gesture-handler';
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
@@ -57,8 +58,9 @@ function LoginPage(props) {
         }
     }
     return (
-        <Center alignItems={"center"} height={"100%"} flexDirection={"row"} justifyContent={"center"}>
-            <Box height={screenHeight*0.87} width={"93%"} bg={"white"} shadow={5} borderRadius={10} paddingX={8} paddingY={5} >
+        <ScrollView >
+        <Center alignItems={"center"} height={screenHeight} flexDirection={"row"} justifyContent={"center"}>
+            <Box height={"90%"} width={"93%"} bg={"white"} shadow={5} borderRadius={10} paddingX={8} paddingY={5} >
                     <Center width={"100%"}>
                         <Text fontFamily={'font'} color={"violet.500"} mt={5} fontSize={40}>ChatHub</Text>
                         <VStack width={"100%"} mt={6}>
@@ -117,6 +119,7 @@ function LoginPage(props) {
                     </Center>
                 </Box>
             </Center>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

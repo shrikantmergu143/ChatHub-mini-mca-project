@@ -56,11 +56,24 @@ function AddUserPage(props) {
         }
       }
     return (
-        <ListItem 
+        <ListItem
+            leftContent={
+                <Button
+                style={styles.shadowProp}  width={"100%"} 
+            >Delete</Button>
+            }
+            rightContent={
+                <Button
+                   style={styles.shadowProp} bgColor={"red.500"}
+                >Delete</Button>
+              }
             key={props?.users?.uid}
-            topDivider
             onPress={()=>props?.navigation.navigate("Message",{...props?.users})} 
-            
+            containerStyle={{paddingTop:15, paddingBottom:15}}
+            tension={100}
+            topDivider
+            pad={10}
+            animation
         >
             <Avatars size={40} rounded source={{uri:props?.users.photoURL}} />
             <ListItem.Content>
@@ -104,7 +117,16 @@ const styles = StyleSheet.create({
     username:{
         fontSize:16,
         lineHeight:28
-    }
+    },
+    shadowProp: {
+        shadowColor: "#000",
+        shadowOffset:{  width: 10,  height: 10,  },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+        hight:"100%"
+      },
+    
 });
 
 const mapStateToProps = (store) => ({

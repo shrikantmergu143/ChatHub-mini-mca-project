@@ -8,6 +8,9 @@ import { StatusBar } from 'expo-status-bar';
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
+import { SocialIcon } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler';
+// import * as GoogleSignIn from 'expo-google-sign-in';
 
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
@@ -37,8 +40,8 @@ function LoginPage(props) {
     }
     function GLogin(){
         const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth()
-            .signInWithPopup(provider)
+        console.log("provider",provider)
+        firebase.auth().signInWithPopup(provider)
             .then((result) => {
                 var credential = result.credential;
                 var token = credential.accessToken;
@@ -56,8 +59,8 @@ function LoginPage(props) {
                     followers:[],
                     save:[]
                 }
-                firebase.firestore().collection("users").doc(user.uid).set(data).then(()=>{
                 console.log("store data Success");
+                firebase.firestore().collection("users").doc(user.uid).set(data).then(()=>{
                 })
             }).catch((error) => {
             var errorCode = error.code;
@@ -97,13 +100,14 @@ function LoginPage(props) {
         });
     }
     return (
-        <Center alignItems={"center"} height={"100%"} flexDirection={"row"} justifyContent={"center"}>
+        <ScrollView >
+        <Center alignItems={"center"} height={screenHeight} flexDirection={"row"} justifyContent={"center"}>
             <Box height={screenHeight*0.9} width={"93%"} bg={"white"} shadow={5} borderRadius={10} paddingX={8} paddingY={5} mt={10}>
             <Center width={"100%"}>
                 <Text fontFamily={'font'} color={"violet.500"} mt={10} fontSize={40}>ChatHub</Text>
                 <VStack width={"100%"} mt={6}>
                     <Center>
-                        <Button style={styles.shadowProp} onPress={()=>FLogin()} mt={10} width={"100%"} textAlign={"center"} mb={2} bg={"primary.500"}>
+                        {/* <Button style={styles.shadowProp} onPress={()=>FLogin()} mt={10} width={"100%"} textAlign={"center"} mb={2} bg={"primary.500"}>
                             <HStack alignItems={"center"}>
                                 <FontAwesome name={"facebook-f"} style={{color:"white", fontSize:20}} />
                                 <Text  style={{marginLeft:5,color:"white",fontWeight:"600",fontSize:16}}  >  Sign in with using Facebook</Text>
@@ -114,7 +118,25 @@ function LoginPage(props) {
                                 <FontAwesome name={"google-plus"} style={{color:"white", fontSize:20}} />
                                 <Text  style={{marginLeft:5,color:"white",fontWeight:"600",fontSize:16}}  >  Sign in with using Google</Text>
                             </HStack>
-                        </Button>
+                        </Button> */}
+                        <VStack mb={6} width={"100%"}>
+                        <SocialIcon
+                            type='google'
+                            title='Sign In With Google'
+                            Component={Button}
+                            button
+                            raised={true}
+                            onPress={()=>GLogin()} 
+                        />
+                         <SocialIcon
+                            button
+                            Component={Button}
+                            type='facebook'
+                            raised={true}
+                            onPress={()=>FLogin()} 
+                            title='Sign In With Facebook'
+                        />
+                        </VStack>
                         <Divider width={"100%"} />
                             <FormControl isInvalid={emailError}  w="100%" maxW="100%" mt={6}>
                                     <FormControl.Label >
@@ -155,6 +177,7 @@ function LoginPage(props) {
             </Center>
             </Box>
         </Center>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

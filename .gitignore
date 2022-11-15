@@ -12,7 +12,7 @@ web-build/
 
 # macOS
 .DS_Store
-
+facebook-android-sdk-current
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
