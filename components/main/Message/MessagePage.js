@@ -302,7 +302,7 @@ function AddUserPage(props) {
                 <TouchableOpacity onPress={()=>pickImage()} style={{height:40,width:40,borderRadius:20,display:'flex',alignItems:"center",justifyContent:'center',backgroundColor:'white'}}>
                     <Entypo name={"attachment"} style={{fontSize:20}} />
                 </TouchableOpacity>
-                <Input placeholder={"Chat with  "+ users.username} onSubmitEditing={()=>sendMessage(props.route.params.id)} value={message} onChangeText={(e)=>setMessage(e)} height={39} pl={5} variant="rounded"  w="75%" bg={"white"}/>
+                <Input placeholder={"Chat with  "+ users.username} multiline={true} onSubmitEditing={()=>sendMessage(props.route.params.id)} value={message} onChangeText={(e)=>setMessage(e)} height={39} pl={5} variant="rounded"  w="75%" bg={"white"}/>
                 <TouchableOpacity onPress={()=>sendMessage(props.route.params.id)} style={{height:40,width:40,borderRadius:20,display:'flex',alignItems:"center",justifyContent:'center'}}>
                     <MaterialCommunityIcons name={"send"} style={{fontSize:26, color:"#147df1"}} />
                 </TouchableOpacity>

@@ -6,6 +6,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { user } from "./redux/reducers/user";
 import { users } from "./redux/reducers/users";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const initialState = {};
 
@@ -13,7 +14,6 @@ const persistConfig = {
   key: "chathub-store",
   storage
 };
-
 const middleware = [thunk];
 
 const rootReducer = combineReducers({

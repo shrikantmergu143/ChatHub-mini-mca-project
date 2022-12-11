@@ -39,7 +39,7 @@ export default function App() {
     <PaperProvider>
       <NativeBaseProvider theme={theme}>
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
               <StatusBar animated={true}  style="light"  backgroundColor="#61dafb" />
               <Apps/>
         </PersistGate>

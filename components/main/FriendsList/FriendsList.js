@@ -69,7 +69,6 @@ function AddUserPage(props) {
               }
             key={props?.users?.uid}
             onPress={()=>props?.navigation.navigate("Message",{...props?.users})} 
-            containerStyle={{paddingTop:15, paddingBottom:15}}
             tension={100}
             topDivider
             pad={10}

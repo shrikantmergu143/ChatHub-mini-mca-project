@@ -1,4 +1,4 @@
-import {  CLEAR_DATA, EMAIL_STATE_CHANGE, FETCH_FRIENDS_STATE_CHANGE, FETCH_USER_FREINDS_STATE_CHNAGE, PASSWORD_STATE_CHANGE,FETCH_USER_FRIENDS_TATE_CHANGE, FETCH_ALL_USER_STATE_CHANGE, FULLNAME_STATE_CHANGE, USERNAME_STATE_CHANGE, USER_STATE_CHANGE } from "./../constants/index"
+import {  CLEAR_DATA, EMAIL_STATE_CHANGE, FETCH_CALL_FRIEND_LIST_USERS, FETCH_CONTACT_LIST, FETCH_FRIENDS_STATE_CHANGE, FETCH_USER_FREINDS_STATE_CHNAGE, PASSWORD_STATE_CHANGE,FETCH_USER_FRIENDS_TATE_CHANGE, FETCH_ALL_USER_STATE_CHANGE, FULLNAME_STATE_CHANGE, USERNAME_STATE_CHANGE, USER_STATE_CHANGE } from "./../constants/index"
 import firebase from "firebase/compat"
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -89,5 +89,29 @@ export function fetchFriendsState(){
            res.uid!==firebase.auth().currentUser.uid &&
            dispatch({type:FETCH_FRIENDS_STATE_CHANGE,status:res.status,uid:res.uid})
        })
+    })
+}
+export function FetchContactList(user){
+    return((dispatch, getState)=>{
+        const data = getState()?.usersState?.ContactList;
+        const CheckUser = data?.filter((item)=>item.uid === user?.uid);
+        if(CheckUser?.length === 0){
+            data?.push(user)
+            dispatch({type:FETCH_CONTACT_LIST,payload:data})
+        }else{
+            const AllUsers = data?.map((item)=>{
+                if(item.uid === user?.uid){
+                    return user;
+                }else{
+                    return item;
+                }
+            })
+            dispatch({type:FETCH_CONTACT_LIST,payload:AllUsers})
+        }        
+    })
+}
+export function CallFetchFriendList(user){
+    return((dispatch)=>{
+        dispatch({type:FETCH_CALL_FRIEND_LIST_USERS, payload:user});
     })
 }

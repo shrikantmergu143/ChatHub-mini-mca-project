@@ -9,53 +9,72 @@ import { FontAwesome, Feather } from "@expo/vector-icons";
 import firebase from "firebase/compat";
 import "firebase/compat/auth";
 import { Button as Buttons } from 'react-native-elements';
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { collection, addDoc, query, where, deleteDoc, doc } from "firebase/firestore";
+import auth from "./../../../config/Firebase"
+import { useCollection } from "react-firebase-hooks/firestore";
 import "firebase/compat/firestore"
 import { db } from '../../../config/Firebase';
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
 function AddUserPage(props) {
-    const [sendFriend, setStatus] = useState(false)
+    const [user] = useAuthState(auth);
+    const userChatRef = query(
+        collection(db, "friends"),
+        where("users", "array-contains", firebase.auth().currentUser.uid)
+    );
+    const [chatsSnapshot] = useCollection(userChatRef);
+    const chatAlreadyExists = (recipientEmail) =>
+    !!chatsSnapshot?.docs.find((chat) =>{
+        return chat.data().users.find((user) => user === recipientEmail) !== undefined
+    });
+    const [sendFriend, setStatus] = useState(chatAlreadyExists(props.uid))
     const [load,setload] = useState(false)
     const toast = useToast();
     useEffect(()=>{
-        db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(props.uid).get().then((res)=>{
-            if(res.exists){
-                setStatus(true)
-            }else{
-                setStatus(false)
-            }
-        })
-    },[!sendFriend])
+        setStatus(chatAlreadyExists(props.uid))
+    },[chatsSnapshot]);
+
     function AddFriend(uid){
-        toast.show({
-            title: "Friend added soon please go back it require time to procced",
-            placement: "bottom"
-          })
+        const user_id = firebase.auth().currentUser.uid
+        // toast.show({ title: "Friend added soon please go back it require time to procced",placement: "bottom"})
         setload(true)
-        setStatus(true)
-        db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayUnion(uid)})
-        db.collection("friends").add({users:[uid, firebase.auth().currentUser.uid]})
-        db.collection("users").doc(uid).update({friends:firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid)})
-        db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(uid).set({})
-        setTimeout(()=>{
-            setload(false)
-        },4000)
+        // setStatus(true)
+        // db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayUnion(uid)})
+        // db.collection("friends").add({users:[uid, firebase.auth().currentUser.uid]})
+        const col = collection(db, "friends");
+        addDoc(col, {
+            users: [uid, firebase.auth().currentUser.uid],
+            [uid]:[],
+            [user_id]:[],
+            last_messages:{
+                message:"",
+                sendTo:"",
+                sendBy:"",
+                readBy:"",
+                readTo:"",
+                sendAt:"",
+                type:'text'
+            }
+        });
+        // db.collection("users").doc(uid).update({friends:firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid)})
+        // db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(uid).set({})
+        setTimeout(()=>setload(false), 1000)
     }
     function DeleteFriend(id){
         setload(true)
-        setStatus(false)
+        // setStatus(false)
         const send =  props.friend.find(res=>res.uid===props.uid?res.id:false);
         if(send.id){
-            db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(id).delete()
-            db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayRemove(id)})
-            db.collection("friends").doc(send.id).delete();
-            db.collection("users").doc(id).update({friends:firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid)})
+            // db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(id).delete()
+            // db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayRemove(id)})
+            // db.collection("friends").doc(send.id).delete();
+            const col = doc(db, `friends/${send.id}`);
+            deleteDoc(col);
+            // db.collection("users").doc(id).update({friends:firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid)})
         }
-        setTimeout(()=>{
-            setload(false)
-        },4000)
+        setTimeout(()=>setload(false), 1000)
     }
 
     
@@ -68,28 +87,35 @@ function AddUserPage(props) {
                     <Text>{props?.username}</Text>
                 </VStack>
             </HStack>
-            {
-           
-            sendFriend && load==false?
+            {load === true?
+            (
+                <Buttons
+                    loading={true}
+                    loadingStyle={{width:100, height:15}}
+                /> 
+            )
+            :(sendFriend?
                <HStack  justifyContent={"flex-end"} space={1}>
-                    <Button onPress={()=>DeleteFriend(props?.uid)} borderRadius={100} bg={"white"} >
+                    <Buttons
+                        onPress={()=>DeleteFriend(props?.uid)} 
+                        icon={
                         <FontAwesome name={"times"} style={{color:'black', fontSize:18,}} />
-                    </Button>
-                    <Button>
-                        <HStack alignItems={"center"}>
-                            <Feather name={"user-check"} style={{marginRight:4, fontSize:18, color:'white'}} />
-                            <Text color={"white"}> Added</Text>
-                        </HStack>
-                    </Button>
+                        }
+                        buttonStyle={{backgroundColor:"white", }}
+                    />
+                    <Buttons
+                        icon={
+                            <Feather name={"user-check"} style={{ fontSize:14,marginRight:10, color:'white'}} />
+                        }
+                        loading={load}
+                        title={"Added"}
+                        iconPosition={'left'}
+                        titleStyle={{fontSize:14}}
+                        buttonStyle={{paddingLeft:14, paddingRight:14}}
+                        loadingStyle={{width:80, height:15}}
+                    />
                </HStack>
                 :
-                
-                // <Button colorScheme={'primary'} isLoading={load} isLoadingText="wait" spinnerPlacement={"start"} onPress={()=>AddFriend(props.uid)}> 
-                //     <HStack alignItems={"center"}>
-                //         <Feather name={"user-plus"} style={{marginRight:4, fontSize:18, color:'white'}} />
-                //         <Text color={"white"}> Add Freind</Text>
-                //     </HStack>
-                // </Button>
                 <Buttons
                     onPress={()=>AddFriend(props.uid)}
                     icon={
@@ -102,7 +128,7 @@ function AddUserPage(props) {
                     buttonStyle={{paddingLeft:14, paddingRight:14}}
                     loadingStyle={{width:80, height:15}}
                 />
-            }
+            )}
         </HStack>
     )
 }

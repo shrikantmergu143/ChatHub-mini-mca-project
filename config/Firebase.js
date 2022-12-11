@@ -3,14 +3,13 @@ import "firebase/compat/auth";
 require('firebase/compat/firestore');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAC1XLQGwPEHLEVDaEcCj4ZjqYMa6SPGog",
-    authDomain: "instashare-7eb98.firebaseapp.com",
-    databaseURL: "https://instashare-7eb98-default-rtdb.firebaseio.com",
-    projectId: "instashare-7eb98",
-    storageBucket: "instashare-7eb98.appspot.com",
-    messagingSenderId: "444459973156",
-    appId: "1:444459973156:web:2b7fdda7aad4e1effb36b1",
-    measurementId: "G-DDJZEH0ETM"
+    apiKey: "AIzaSyAazTQtbVUpAKbNvbX-7Lq9-DOHCSYmOkc",
+    authDomain: "my-instagram-clone-143.firebaseapp.com",
+    databaseURL: "https://my-instagram-clone-143-default-rtdb.firebaseio.com",
+    projectId: "my-instagram-clone-143",
+    storageBucket: "my-instagram-clone-143.appspot.com",
+    messagingSenderId: "90861503110",
+    appId: "1:90861503110:web:9a57a27fdcad76912a8707"
 };
 
 firebase.initializeApp(firebaseConfig);

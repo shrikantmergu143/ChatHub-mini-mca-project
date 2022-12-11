@@ -13,12 +13,15 @@ import RegisterPage from './auth/RegisterPage';
 import Main from './Main';
 import auth from "./../config/Firebase"
 import MenuBarPage from './main/MenuBar/MenuBarPage';
+import { useAuthState } from "react-firebase-hooks/auth";
 import AddUserPage from './main/AddUser/AddUserPage';
 import MessagePage from './main/Message/MessagePage';
 const Stack = createNativeStackNavigator();
 
 function App(props) {
   const [logged,setLogged] = useState(false)
+  const [user, loading] = useAuthState(auth);
+
   const [load,setload] = useState(false);
   const [loaded] = useFonts({
     font: require('./../assets/fonts/Lobster-Regular.ttf'),
@@ -36,17 +39,19 @@ function App(props) {
     })
   },[])
 
-  if(!loaded)return(
+  if(!loaded)
+  return(
     <View>
       <Text style={{marginTop:40}}>Hi</Text>
     </View>
   )
-  if(!load)return(
+  if(loading)
+  return(
     <View style={{height:"100%",width:"100%",alignItems:"center",justifyContent:"center",display:"flex"}}>
       <Text style={{fontSize:30,fontFamily:"font"}}>ChatHub</Text>
     </View>
   )
-  if(!logged){
+  if(!user){
     return(
       <NavigationContainer>
         <Stack.Navigator initialRouteName={"Login"}>

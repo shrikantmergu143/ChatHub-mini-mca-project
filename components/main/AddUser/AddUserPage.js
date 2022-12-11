@@ -10,11 +10,23 @@ import firebase from "firebase/compat";
 import "firebase/compat/auth";
 import "firebase/compat/firestore"
 import UserListPage from '../UserList/UserListPage';
+import { collection, addDoc, query, where, deleteDoc, doc } from "firebase/firestore";
+import auth from "./../../../config/Firebase"
+import { db } from '../../../config/Firebase';
+import { useCollection } from "react-firebase-hooks/firestore";
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
 function AddUserPage(props) {
-  const [load, setload] = useState(true)
+    const [load, setload] = useState(false);
+    const colRef = collection(db, `users`);
+
+    // PREP the messages on the server
+    const messagesQuery = query(colRef, where("uid", "!=", firebase.auth().currentUser.uid));
+    const [chatsSnapshot] = useCollection(messagesQuery);
+    const chatAlreadyExists = () => {
+        return chatsSnapshot?.docs?.map((chat) =>({...chat.data()}));
+    }
     useLayoutEffect(()=>{
         props.navigation.setOptions({
           headerShown :true,
@@ -33,15 +45,8 @@ function AddUserPage(props) {
           },
           headerShadowVisible: true
         })
-      },[!props.navigation])
-      useEffect(()=>{
-        props.fetchUser()
-        props.fetchAllUser()
-        setTimeout(()=>{
-          setload(false)
-        },4000)
-      },[!props.usersList]);
-      if(load){
+    },[!props.navigation])
+    if(load){
         return(
             <View style={{flex:1,display:"flex",alignItems:'center',justifyContent:'center'}}>
                 <Spinner size={40}/>
@@ -52,9 +57,9 @@ function AddUserPage(props) {
         <KeyboardAvoidingView behavior="padding" style={styles.form}>
             <VStack bg={"white"}>
                 <FlatList
-                    data={props.usersList}
+                    data={chatsSnapshot?.docs}
                     renderItem={({item})=>(
-                        <UserListPage {...item} />
+                        <UserListPage {...item.data()} />
                     )}
                 />
             </VStack>

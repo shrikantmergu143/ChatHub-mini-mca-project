@@ -33,9 +33,9 @@ function AddUserPage(props) {
     return (
             <FlatList
                 keyExtractor={(item, index) => index.toString()}
-                data={props?.friends}
+                data={props?.ContactList}
                 renderItem={({item})=>(
-                    <FriendsList navigation={props.navigation} users={item} />
+                    <FriendsList navigation={props?.navigation} users={item} />
                 )}
             />
     )
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (store) => ({
   friends:store.userState.friends,
   usersList:store.usersState.usersList,
+  ContactList:store.usersState.ContactList,
   friendsList:store.usersState.friendsList
 })
 const mapDispatchProps = (dispatch) => bindActionCreators({ fetchEmailChange, fetchFriends  }, dispatch);
