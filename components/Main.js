@@ -5,7 +5,7 @@ import { Entypo, FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import { StyleSheet, View,Text, Image,TextInput, Button,Dimensions,TouchableOpacity,ScrollView, Pressable, LogBox} from 'react-native'
 import { bindActionCreators } from 'redux'
-import { fetchUser, fetchAllUser, fetchFriends, CallFetchFriendList, fetchFriendsState, FetchContactList, fetchrequestFriends } from './../redux/action/index';
+import { fetchUser, fetchAllUser, fetchFriends, DeleteFriendList, CallFetchFriendList, fetchFriendsState, FetchContactList, fetchrequestFriends } from './../redux/action/index';
 import HomeScreen from "./main/HomePage/HomePage";
 import { HStack, VStack, Box, Popover, Menu } from 'native-base';
 import StatusPage from './main/StatusPage/StatusPage';
@@ -64,30 +64,33 @@ function Main(props){
     })
   },[!props.navigation]);
 
-  // useEffect(()=>{
-  //   props.fetchUser();
-  //   props.fetchAllUser();
-  //   props.fetchFriends();
-  // },[!props.currentUser]);
+  useEffect(()=>{
+    props.fetchUser();
+    props.fetchAllUser();
+    props.fetchFriends();
+  },[!props.currentUser]);
 
   useEffect(()=>{
     props?.CallFetchFriendList(ContactFrd);
     // callFetchUsers();
   },[!ContactFrd]);
-
+  
   useEffect(()=>{
     callFetchUsers()
   },[props?.friendlist]);
 
   const callFetchUsers = async() =>{
-    ContactFrd?.map(async(item)=>{
-      const userChatRef = doc(db, `users/${item.user_id}`);
-      const chatsSnapshot = await getDoc(userChatRef);
-      props?.FetchContactList({...chatsSnapshot?.data(), friend_id:item?.id});
-    });
-    props?.friendlist?.map((item)=>{
-
-    });
+    // ContactFrd?.map(async(item)=>{
+    //   const userChatRef = doc(db, `users/${item.user_id}`);
+    //   const chatsSnapshot = await getDoc(userChatRef);
+    //   props?.FetchContactList({...chatsSnapshot?.data(), friend_id:item?.id});
+    // });
+    // props?.ContactList?.map((item)=>{
+    //   const result = ContactFrd?.filter((item1)=>item1.id === item.friend_id)?.length>0?true:false;
+    //   if(result === false){
+    //     props?.DeleteFriendList(item);
+    //   }
+    // });
   }
 
     return(
@@ -116,6 +119,6 @@ const mapStateToProps = (store) => ({
   friendlist:store.usersState.friendlist,
   ContactList:store.usersState.ContactList,
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, CallFetchFriendList, FetchContactList, fetchAllUser, fetchFriends, fetchFriendsState, fetchrequestFriends }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, DeleteFriendList, CallFetchFriendList, FetchContactList, fetchAllUser, fetchFriends, fetchFriendsState, fetchrequestFriends }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

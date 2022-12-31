@@ -12,31 +12,64 @@ import "firebase/compat/firestore";
 import moment from 'moment';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { ListItem, Avatar as Avatars } from 'react-native-elements'
-
+  import { Badge } from 'react-native-elements'
+  import {    db  } from '../../../config/Firebase';
+import {
+    collection,
+    doc,
+    orderBy,
+    query,
+    setDoc,
+    Timestamp,
+    addDoc,
+    where,
+    updateDoc
+  } from "firebase/firestore";
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
 function AddUserPage(props) {
-    const [message, setMessage] = useState({});
+    const {last_messages} = props?.users;
+    const Users_id = firebase.auth().currentUser.uid;
+    const DeliveredMessages = props?.users[Users_id];
+    const UnSeen = props?.users[`seen${Users_id}`];
+    const UsersSeen = props?.users[`seen${props?.users?.uid}`];
+    const UsersSeenDelivered = props?.users[props?.users?.uid];
+    const Delivered = props?.users[Users_id];
+    // useEffect(()=>{
+    //     firebase.firestore()
+    //     .collection("friends")
+    //     .doc(props.users.id)
+    //     .collection("last_messages")
+    //     .orderBy("sendAt", "desc")
+    //     .onSnapshot((snapshot)=>{
+    //         const data = snapshot.docs.map((doc)=>{
+    //             return {...doc.data(), id:doc.id};
+    //         })
+    //         if(data.length!==0){
+    //             setMessage(data[0]);
+    //         }
+    //         else{
+    //             setMessage({})
+    //         }
+    //     })
+    // },[!last_messages])
     useEffect(()=>{
-        firebase.firestore()
-        .collection("friends")
-        .doc(props.users.id)
-        .collection("message")
-        .orderBy("sendAt", "desc")
-        .onSnapshot((snapshot)=>{
-            const data = snapshot.docs.map((doc)=>{
-                return {...doc.data(), id:doc.id};
-            })
-            if(data.length!==0){
-                setMessage(data[0]);
-            }
-            else{
-                setMessage({})
-            }
-        })
-    },[!message])
-
+        if(DeliveredMessages){
+            callAddDelivered()
+        }
+    },[]);
+    const callAddDelivered = async () =>{
+        // if(DeliveredMessages?.length>0){
+        //     DeliveredMessages?.map(async(item)=>{
+        //         const Delivered = doc(db, item);
+        //         await setDoc(Delivered, {
+        //             delivered:new Date()
+        //         },{ merge: true });
+        //     })
+        //     db.collection("friends").doc(props?.users?.id).update({[Users_id]:[]})
+        // }
+    }
     function toDate(unix_timestamp) {
         let date = new Date(unix_timestamp * 1000);
         let currentDate = new Date();
@@ -44,15 +77,15 @@ function AddUserPage(props) {
       
         if (timeDiff <= (24 * 60 * 60 * 1000)) {
           //Today
-          return moment(date).format('h:mm A');
+          return moment.utc(date).local().format('h:mm A');
         } else if (timeDiff <= (48 * 60 * 60 * 1000)) {
           // Yesterday
           return "Yesterday"
         }else if(timeDiff <=  (168 * 60 * 60 * 1000)) {
           // Less than week
-          return moment(date).format('dddd')
+          return moment.utc(date).local().format('dddd')
         } else {
-          return moment(date).format("DD/MM/YYYY")
+          return moment.utc(date).local().format("DD/MM/YYYY")
         }
       }
     return (
@@ -76,28 +109,26 @@ function AddUserPage(props) {
         >
             <Avatars size={40} rounded source={{uri:props?.users.photoURL}} />
             <ListItem.Content>
-                <ListItem.Title style={{ fontWeight: 'bold' }}>{props?.users.username}</ListItem.Title>
+                <ListItem.Title style={{ fontWeight: 'bold', fontSize:18 }}>{props?.users.username}</ListItem.Title>
                 <ListItem.Subtitle>
-                {message?.sendAt!==undefined? message.type==="text"?
-                        <Text >{message?.message}</Text>
-                        :
-                        message.type==="image"?<Image source={{uri:message.message}} style={{height:20, width:26, borderRadius:5, borderColor:"whitesmoke", borderWidth:1}} />
-                        :
-                        message.type==="video"&&
-                        <Video
-                            style={styles.video}
-                            source={{
-                            uri: message.message,
-                            }}
-                            useNativeControls
-                            resizeMode="contain"
-                        />
-                        :
-                        props?.users.fullname
-                    }
+                {last_messages?.message ? (
+                    last_messages.type==="text"?
+                    <Text >{last_messages?.message}</Text>
+                    :
+                    last_messages.type==="image"?<Image source={{uri:last_messages?.message}} style={{height:20, width:26, borderRadius:5, borderColor:"whitesmoke", borderWidth:1}} />
+                    :
+                    last_messages.type==="video"&&
+                    <Text>Video</Text>
+                ):props?.users.fullname}
                 </ListItem.Subtitle>
             </ListItem.Content>
-            {message?.sendAt&&<Text fontSize="xs" color="coolGray.800" _dark={{ color: 'warmGray.50'}} alignSelf="flex-start">{toDate(message?.sendAt)}</Text>}
+            {last_messages?.sendAt&&
+              <Text style={{position: 'absolute', top: 15, right: 20}} fontSize="xs" color="coolGray.800" _dark={{ color: 'warmGray.50'}} alignSelf="flex-start">{toDate(last_messages?.sendAt)}</Text>
+            }
+            {UnSeen?.length>0 && 
+              <Badge value={UnSeen?.length} status="primary" 
+                containerStyle={{ position: 'absolute', bottom: 15, right: 20 }}
+              />}
         </ListItem>
     )
 }

@@ -16,6 +16,9 @@ import MenuBarPage from './main/MenuBar/MenuBarPage';
 import { useAuthState } from "react-firebase-hooks/auth";
 import AddUserPage from './main/AddUser/AddUserPage';
 import MessagePage from './main/Message/MessagePage';
+import UserAccount from './main/UserAccount/UserAccount';
+import AccountScreen from './main/Account/AccountPage';
+
 const Stack = createNativeStackNavigator();
 
 function App(props) {
@@ -67,6 +70,10 @@ function App(props) {
           <Stack.Screen name="Main" component={Main} options={{ headerShown: true }} />
           <Stack.Screen name="Menu" component={MenuBarPage} options={{ headerShown: true }} />
           <Stack.Screen name="AddUser" component={AddUserPage} options={{ headerShown: true }} />
+          <Stack.Screen name="UserAccount" component={UserAccount} options={{ headerShown: true }} />
+          <Stack.Screen name="Account" component={AccountScreen} options={{ headerShown: true }} />
+          {/* <Stack.Screen name="Account" component={AccountPage} options={{ headerShown: true }} /> */}
+          {/* <Stack.Screen name="Account" component={AccountPage} options={{ headerShown: true }} /> */}
           <Stack.Screen name="Message" component={MessagePage} options={{ headerShown: true }} />
         </Stack.Navigator>
       </NavigationContainer>

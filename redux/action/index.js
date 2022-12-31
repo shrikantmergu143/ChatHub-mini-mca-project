@@ -1,4 +1,4 @@
-import {  CLEAR_DATA, EMAIL_STATE_CHANGE, FETCH_CALL_FRIEND_LIST_USERS, FETCH_CONTACT_LIST, FETCH_FRIENDS_STATE_CHANGE, FETCH_USER_FREINDS_STATE_CHNAGE, PASSWORD_STATE_CHANGE,FETCH_USER_FRIENDS_TATE_CHANGE, FETCH_ALL_USER_STATE_CHANGE, FULLNAME_STATE_CHANGE, USERNAME_STATE_CHANGE, USER_STATE_CHANGE } from "./../constants/index"
+import {  CLEAR_DATA, DELETE_CALL_FRIEND_LIST_USERS, EMAIL_STATE_CHANGE, FETCH_CALL_FRIEND_LIST_USERS, FETCH_CONTACT_LIST, FETCH_FRIENDS_STATE_CHANGE, FETCH_USER_FREINDS_STATE_CHNAGE, PASSWORD_STATE_CHANGE,FETCH_USER_FRIENDS_TATE_CHANGE, FETCH_ALL_USER_STATE_CHANGE, FULLNAME_STATE_CHANGE, USERNAME_STATE_CHANGE, USER_STATE_CHANGE } from "./../constants/index"
 import firebase from "firebase/compat"
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -62,7 +62,7 @@ export function fetchFriends(){
        .onSnapshot((snapshot)=>{
            const friends = snapshot.docs.map((doc)=>{
                const uid = doc.data().users.find((res)=>res!==firebase.auth().currentUser.uid)
-               const users = getState().usersState.usersList.find((item)=>item.uid === uid)
+               const users = getState().usersState.usersList.find((item)=>item.uid === uid);
                return{...doc.data(),id:doc.id,...users}
            })
            dispatch({type:FETCH_USER_FRIENDS_TATE_CHANGE, payload:friends})
@@ -113,5 +113,10 @@ export function FetchContactList(user){
 export function CallFetchFriendList(user){
     return((dispatch)=>{
         dispatch({type:FETCH_CALL_FRIEND_LIST_USERS, payload:user});
+    })
+}
+export function DeleteFriendList(user){
+    return((dispatch)=>{
+        dispatch({type:DELETE_CALL_FRIEND_LIST_USERS, payload:user});
     })
 }

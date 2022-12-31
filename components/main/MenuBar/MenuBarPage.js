@@ -29,7 +29,7 @@ function AddUserPage(props) {
                 <FontAwesome name={"user-plus"} style={{fontSize:16,color:"grey"}}  />
                 <Text ml={1} fontSize={14} fontWeight={"bold"}>Add Friend</Text>
             </Menu.Item>
-            <Menu.Item style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
+            <Menu.Item  onPress={()=>props.navigation.navigate("UserAccount", {uid:firebase?.auth().currentUser.uid})} style={{borderBottomColor:"whitesmoke",borderBottomWidth:1}}>
                 <FontAwesome name={"user"} style={{fontSize:16,color:"grey"}}  />
                 <Text ml={1} fontSize={14} fontWeight={"bold"}>Personal Account</Text>
             </Menu.Item>

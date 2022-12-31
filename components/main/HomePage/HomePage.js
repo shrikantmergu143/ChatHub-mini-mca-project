@@ -29,13 +29,15 @@ function AddUserPage(props) {
             </View>
         )
     }
-
+    // console.log("props?.friends", props?.friends)
     return (
             <FlatList
                 keyExtractor={(item, index) => index.toString()}
-                data={props?.ContactList}
+                data={props?.friends?.sort(( a, b )=> {
+                        return new Date( b?.last_messages?.sendAt?.toDate()) - new Date( a?.last_messages?.sendAt?.toDate())
+                })}
                 renderItem={({item})=>(
-                    <FriendsList navigation={props?.navigation} users={item} />
+                    <FriendsList navigation={props.navigation} users={item} />
                 )}
             />
     )
@@ -52,7 +54,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (store) => ({
   friends:store.userState.friends,
   usersList:store.usersState.usersList,
-  ContactList:store.usersState.ContactList,
   friendsList:store.usersState.friendsList
 })
 const mapDispatchProps = (dispatch) => bindActionCreators({ fetchEmailChange, fetchFriends  }, dispatch);

@@ -1,6 +1,6 @@
 import { Text, View, Box, Center, VStack, FormControl, Input, Button, Divider, Icon, HStack, FlatList, Avatar, Spinner, useToast } from 'native-base'
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { fetchAllUser, fetchFriendsState, fetchFriends,fetchrequestFriends, fetchUser } from './../../../redux/action';
+import { fetchAllUser, fetchFriendsState, fetchFriends,fetchrequestFriends, fetchUser, DeleteFriendList } from './../../../redux/action';
 import {KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity} from "react-native"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -19,22 +19,23 @@ const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
 function AddUserPage(props) {
-    const [user] = useAuthState(auth);
-    const userChatRef = query(
+    let [user] = useAuthState(auth);
+    let userChatRef = query(
         collection(db, "friends"),
         where("users", "array-contains", firebase.auth().currentUser.uid)
     );
-    const [chatsSnapshot] = useCollection(userChatRef);
-    const chatAlreadyExists = (recipientEmail) =>
+    let [chatsSnapshot] = useCollection(userChatRef);
+    let FriendList = chatsSnapshot?.docs.map((chat) =>({...chat.data(), friend_id:chat.id}));
+    let chatAlreadyExists = (recipientEmail) =>
     !!chatsSnapshot?.docs.find((chat) =>{
         return chat.data().users.find((user) => user === recipientEmail) !== undefined
     });
-    const [sendFriend, setStatus] = useState(chatAlreadyExists(props.uid))
-    const [load,setload] = useState(false)
-    const toast = useToast();
-    useEffect(()=>{
-        setStatus(chatAlreadyExists(props.uid))
-    },[chatsSnapshot]);
+    let [sendFriend, setStatus] = useState(chatAlreadyExists(props.uid))
+    let [load,setload] = useState(false)
+    let toast = useToast();
+    // useEffect(()=>{
+    //     setStatus(chatAlreadyExists(props.uid))
+    // },[chatsSnapshot]);
 
     function AddFriend(uid){
         const user_id = firebase.auth().currentUser.uid
@@ -48,32 +49,58 @@ function AddUserPage(props) {
             users: [uid, firebase.auth().currentUser.uid],
             [uid]:[],
             [user_id]:[],
+            seen:{
+                [uid]:[],
+                [user_id]:[],
+            },
+            [`seen${uid}`]:[],
+            [`seen${user_id}`]:[],
             last_messages:{
                 message:"",
                 sendTo:"",
                 sendBy:"",
                 readBy:"",
                 readTo:"",
-                sendAt:"",
-                type:'text'
+                sendAt:new Date(),
+                type:''
             }
         });
+        setStatus(true)
+
         // db.collection("users").doc(uid).update({friends:firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid)})
         // db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(uid).set({})
         setTimeout(()=>setload(false), 1000)
     }
-    function DeleteFriend(id){
+    //    console.log("chatID", FriendList, props)
+    async function DeleteFriend(id){
         setload(true)
         // setStatus(false)
-        const send =  props.friend.find(res=>res.uid===props.uid?res.id:false);
-        if(send.id){
-            // db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(id).delete()
-            // db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayRemove(id)})
-            // db.collection("friends").doc(send.id).delete();
-            const col = doc(db, `friends/${send.id}`);
-            deleteDoc(col);
-            // db.collection("users").doc(id).update({friends:firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid)})
-        }
+       const chatID =  FriendList?.map(async(item)=>{
+            item?.users?.map(async(user)=>{
+                if(user === id){
+                    await db.collection("friends").doc(item.friend_id).delete();
+                    props?.DeleteFriendList(id);
+                    setStatus(false)
+                }
+            })
+       });
+    //    if(chatID?.length>0){
+    //         if(chatID[0].friend_id){
+    //             await db.collection("friends").doc(chatID[0].friend_id).delete();
+    //             props?.DeleteFriendList(id);
+    //             setStatus(false)
+    //         }
+    //    }
+        
+        // const send =  props.friend.find(res=>res.uid===props.uid?res.id:false);
+        // if(send.id){
+        //     // db.collection("userfriend").doc(firebase.auth().currentUser.uid).collection("friends").doc(id).delete()
+        //     // db.collection("users").doc(firebase.auth().currentUser.uid).update({friends:firebase.firestore.FieldValue.arrayRemove(id)})
+        //     // db.collection("friends").doc(send.id).delete();
+        //     const col = doc(db, `friends/${send.id}`);
+        //     deleteDoc(col);
+        //     // db.collection("users").doc(id).update({friends:firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid)})
+        // }
         setTimeout(()=>setload(false), 1000)
     }
 
@@ -94,7 +121,7 @@ function AddUserPage(props) {
                     loadingStyle={{width:100, height:15}}
                 /> 
             )
-            :(sendFriend?
+            :(chatAlreadyExists(props.uid)?
                <HStack  justifyContent={"flex-end"} space={1}>
                     <Buttons
                         onPress={()=>DeleteFriend(props?.uid)} 
@@ -143,10 +170,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (store) => ({
     currentUser:store.userState.currentUser,
-    friend:store.userState.friends,
-    usersList:store.usersState.usersList,
-    friendsList:store.usersState.friendsList
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchAllUser, fetchFriends, fetchFriendsState, fetchrequestFriends, fetchUser}, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchAllUser, DeleteFriendList, fetchFriends, fetchFriendsState, fetchrequestFriends, fetchUser}, dispatch);
  
 export default connect(mapStateToProps, mapDispatchProps)(AddUserPage);
